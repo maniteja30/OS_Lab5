@@ -1,1 +1,10 @@
-*.pdf
+# Compiled binaries
+part1/sharpen
+a.out
+
+# Generated output images
+output_part1.ppm
+output_part*.ppm
+
+# Temporary files
+*.tmp
