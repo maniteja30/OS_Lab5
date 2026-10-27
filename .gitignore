@@ -1,10 +1,9 @@
-# Compiled binaries
+# Generated executables
 part1/sharpen
-a.out
+part2_1/thread_pipeline
 
 # Generated output images
-output_part1.ppm
 output_part*.ppm
 
-# Temporary files
-*.tmp
+# General
+a.out
