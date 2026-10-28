@@ -7,7 +7,13 @@ PART1_BIN = part1/sharpen
 PART2_1_SRC = part2_1/src/thread_pipeline.cpp part1/src/libppm.cpp
 PART2_1_BIN = part2_1/thread_pipeline
 
-.PHONY: all part1 part2_1_compile part2_1_variant1 part2_1_variant2 clean
+PART2_2_SRC = part2_2/src/process_pipeline.cpp part1/src/libppm.cpp
+PART2_2_BIN = part2_2/process_pipeline
+
+.PHONY: all part1 \
+        part2_1_compile part2_1_variant1 part2_1_variant2 \
+        part2_2_compile part2_2_variant1 part2_2_variant2 \
+        clean
 
 all: part1
 
@@ -32,15 +38,27 @@ part2_1_compile: $(PART2_1_BIN)
 $(PART2_1_BIN): $(PART2_1_SRC) part1/src/libppm.h
 	$(CXX) $(CXXFLAGS) $(PART2_1_SRC) -o $(PART2_1_BIN)
 
-
-# Variant 1: 1000 iterations
 part2_1_variant1: $(PART2_1_BIN)
-	./$(PART2_1_BIN) images/1.ppm output_part2_2_variant1.ppm 1
+	./$(PART2_1_BIN) images/1.ppm output_part2_1_variant1.ppm 1
 
-
-# Variant 2: Revised repetition counts
 part2_1_variant2: $(PART2_1_BIN)
-	./$(PART2_1_BIN) images/1.ppm output_part2_2_variant2.ppm 2
+	./$(PART2_1_BIN) images/1.ppm output_part2_1_variant2.ppm 2
+
+
+# ------------------------------------------------------------
+# Part II.2: Three processes communicating using pipes
+# ------------------------------------------------------------
+
+part2_2_compile: $(PART2_2_BIN)
+
+$(PART2_2_BIN): $(PART2_2_SRC) part1/src/libppm.h
+	$(CXX) $(CXXFLAGS) $(PART2_2_SRC) -o $(PART2_2_BIN)
+
+part2_2_variant1: $(PART2_2_BIN)
+	./$(PART2_2_BIN) images/1.ppm output_part2_2_variant1.ppm 1
+
+part2_2_variant2: $(PART2_2_BIN)
+	./$(PART2_2_BIN) images/1.ppm output_part2_2_variant2.ppm 2
 
 
 # ------------------------------------------------------------
@@ -48,5 +66,6 @@ part2_1_variant2: $(PART2_1_BIN)
 # ------------------------------------------------------------
 
 clean:
-	rm -f $(PART1_BIN) $(PART2_1_BIN)
-	rm -f output_part1.ppm output_part2_2_variant*.ppm
+	rm -f $(PART1_BIN) $(PART2_1_BIN) $(PART2_2_BIN)
+	rm -f output_part1.ppm output_part2_1_variant*.ppm
+	rm -f output_part2_2_variant*.ppm
